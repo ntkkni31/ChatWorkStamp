@@ -15,7 +15,7 @@ function isChatPage() {
  * {
  *     "id": [id],
  *     "label": [マウスオーバー時のコメント],
- *     "iconClass": [アイコンのクラス]
+ *     "iconClass": [アイコンのクラス] (array)
  * }
  */
 function createButtonElement(args){
@@ -87,9 +87,48 @@ function insertStampFunction(previewId) {
 
   insertTag(tag);
   
-  closeTooltip("_stampList");
+  // shiftキーが押されていたら、閉じない
+  if(!event.shiftKey){
+    closeTooltip("_stampList");
+  }
+  
+  // ctrlキーが押されていたら、そのまま送信
+  if(event.ctrlKey){
+    $("#_sendButton").click();
+  }
 }
+
+function loadGallery(gallery) {
+  $("#_chatFileListTip ul._cwLTList").children("li").each(function(i, elem) {
+    var fileNameElem = $(elem).find("p._fileName");
+    if(!fileNameElem) return true; // continue
     
+    var fileNameSplit = fileNameElem.text().split('.');
+    var type = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
+    if(type !== "jpg" && type !== "jpeg" && type !== "png" && type !== "gif" && type !== "bmp") return true;
+    
+    var fileId = $(elem).attr("data-cwui-lt-value");
+    
+    var stampLi = $("<li>");
+    stampLi.css("display", "inline-block");
+    
+    var stampImg = $("<input>");
+    stampImg.attr("type", "image")
+      .attr("src", "https://www.chatwork.com/gateway.php?cmd=preview_file&bin=1&file_id=" + fileId)
+      .width(100)
+      .height(100)
+      .addClass("stamp")
+      .attr("title", fileNameElem.text());
+    stampImg.click(function(){
+      insertStampFunction(fileId);
+    });
+    
+    stampLi.append(stampImg);
+    
+    gallery.append(stampLi);
+  });
+}
+
 (function() {
   if (!isChatPage()) return;
 
@@ -101,9 +140,15 @@ function insertStampFunction(previewId) {
     var stampGallery = $("<ul>");
     stampGallery.attr("id", "_stampGallery")
       .css("overflow", "auto")
-      .height("99%");
+      .height("271px");
     
     stampListDiv.append(stampGallery);
+    
+    var tooltipFooter = $("<div>");
+    tooltipFooter.addClass("tooltipFooter")
+      .html('"Shift" to multi-select, "Ctrl" to send');
+    
+    stampListDiv.append(tooltipFooter);
     
     wrapperDiv.append(stampListDiv);
     
@@ -114,7 +159,7 @@ function insertStampFunction(previewId) {
     tagList.css("overflow", "auto")
       .height("99%");
     
-    var tagNames = ["info", "title", "code"];
+    var tagNames = ["info", "title", "code", "qt"];
     for(var i = 0; i < tagNames.length; i++) {
       var tagElem = $("<li>");
       tagElem.html(tagNames[i]);
@@ -147,46 +192,21 @@ function insertStampFunction(previewId) {
       var list = $("#_stampList");
       
       if(closeTooltip("_stampList")) return;
-        
+      
       $("#_chatFileAll").click(); // ファイル一覧をロードさせる
       $("#_chatFileAll").click(); // ポップアップが開いてしまうので、もう一回クリックで閉じる
       
       var gallery = $("#_stampGallery");
       gallery.empty();
       
-      $("#_chatFileListTip ul._cwLTList").children("li").each(function(i, elem) {
-        var fileNameElem = $(elem).find("p._fileName");
-        if(!fileNameElem) return true; // continue
-        
-        var fileNameSplit = fileNameElem.text().split('.');
-        var type = fileNameSplit[fileNameSplit.length - 1].toLowerCase();
-        if(type !== "jpg" && type !== "jpeg" && type !== "png" && type !== "gif" && type !== "bmp") return true;
-        
-        var fileId = $(elem).attr("data-cwui-lt-value");
-        
-        var stampLi = $("<li>");
-        stampLi.css("display", "inline-block");
-        
-        var stampImg = $("<input>");
-        stampImg.attr("type", "image")
-          .attr("src", "https://www.chatwork.com/gateway.php?cmd=preview_file&bin=1&file_id=" + fileId)
-          .width(100)
-          .height(100)
-          .addClass("stamp")
-          .attr("title", fileNameElem.text());
-        stampImg.click(function(){
-          insertStampFunction(fileId);
-        });
-        
-        stampLi.append(stampImg);
-        
-        gallery.append(stampLi);
-      });
+      if(!$("#_chatFileAll").hasClass("btnDisable")) {
+        loadGallery(gallery);
+      }
       
       var tooltipHeight = 300;
       var tooltipWidth = $("#_chatContent").width() - 12;
       var tooltipPosX = $(this).offset().left - 150;
-      var tooltipPosY = $(this).offset().top - tooltipHeight - 13;
+      var tooltipPosY = $(this).offset().top - tooltipHeight - 14;
       
       list.css("left", tooltipPosX)
         .css("top", tooltipPosY)
@@ -195,7 +215,7 @@ function insertStampFunction(previewId) {
         .height(tooltipHeight);
       
       var listTriangle = $("#_stampListTriangle");
-      listTriangle.css("left", $(this).offset().left - tooltipPosX + 3);
+      listTriangle.css("left", $(this).offset().left - tooltipPosX + 4);
       
       list.show();
     });
@@ -213,10 +233,10 @@ function insertStampFunction(previewId) {
       
       if(closeTooltip("_tagList")) return;
       
-      var tooltipHeight = 100;
+      var tooltipHeight = 95;
       var tooltipWidth = 70;
       var tooltipPosX = $(this).offset().left - 25;
-      var tooltipPosY = $(this).offset().top - tooltipHeight - 13;
+      var tooltipPosY = $(this).offset().top - tooltipHeight - 14;
       
       list.css("left", tooltipPosX)
         .css("top", tooltipPosY)
@@ -225,7 +245,7 @@ function insertStampFunction(previewId) {
         .height(tooltipHeight);
       
       var listTriangle = $("#_tagListTriangle");
-      listTriangle.css("left", $(this).offset().left - tooltipPosX + 3);
+      listTriangle.css("left", $(this).offset().left - tooltipPosX + 4);
       
       list.show();
     });
