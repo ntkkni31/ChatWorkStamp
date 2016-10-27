@@ -1,10 +1,35 @@
-#_chatContent{
-//    background-image: url("好きな背景画像URLを指定してください。");
-  background-size: cover;
+#_chatContent {
+	background-color: #6b92b9; 
+	background-image: url('http://niwakasoft.jp/sample/0219/img/snow.png'), url('http://niwakasoft.jp/sample/0219/img/snow2.png'), url('http://niwakasoft.jp/sample/0219/img/snow3.png');
+/*	-webkit-animation: snow 20s linear infinite;/*chrome&safari*/
+	animation: snow 15s linear infinite;
 }
 
+@keyframes snow {
+	0% {background-position: 0 0, 0 0, 0 0;}
+	25% {background-position: 15px 125px, 25px 75px, -15px 100px;}
+	50% {background-position: 5px 250px, 30px 150px, -10px 200px;}
+	75% {background-position: 15px 375px, 25px 225px, -15px 300px;}
+	100% {background-position: 0px 500px, 0px 300px, 0px 400px;}
+}
+/*chrome&safari
+@-webkit-keyframes snow {
+	0% {background-position: 0 0, 0 0, 0 0;}
+	100% {background-position: 10px 500px, 100px 300px, 400px 400px;}
+}*/
+
+
+.chatTimeLineBorder {
+	border-top: 0px;
+}
+.chatTimeLineMessage .chatTimeLineMessageInner {
+    border-top: 1px solid rgba(255, 255, 255, 0.0) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.0) !important;
+}
 .chatTimeLineMessage .chatTimeLineMessageHover {
   background: rgba(248, 251, 255, 0.5) !important;
+  /*border-top: 1px solid #B1D6ED !important;
+  border-bottom: 1px solid #B1D6ED !important;*/
 }
 .chatTimeLineMessage .actionNav {
   background: rgba(248, 251, 255, 0.5) !important;
@@ -14,14 +39,10 @@
   text-align: right;
   background: rgba(255, 236, 236, 0.7) !important;
 }
-.chatTimeLineMessageMine .chatTimeLineMessageInner {
-  border-top: 1px solid #ffecec !important;
-  border-bottom: 1px solid #ffecec !important;
-}
 .chatTimeLineMessageMine .chatTimeLineMessageHover {
   background: rgba(255, 239, 239, 0.5) !important;
-  border-top: 1px solid #ffc0cb !important;
-  border-bottom: 1px solid #ffc0cb !important;
+  /*border-top: 1px solid #ffc0cb !important;
+  border-bottom: 1px solid #ffc0cb !important;*/
 }
 .chatTimeLineMessageMine .actionNav {
   background: rgba(255, 239, 239, 0.5) !important;
@@ -48,16 +69,18 @@
 }
 .chatTimeLineMessageMention .chatTimeLineMessageHover {
   background: rgba(231, 239, 228, 0.5) !important;
+  /*border-top: 1px solid #AED6AD !important;
+  border-bottom: 1px solid #AED6AD !important;*/
 }
 .chatTimeLineMessageMention .actionNav {
   background: rgba(231, 239, 228, 0.5) !important;
 }
 
 .chatTimeLineMessage pre{
-    background: #ddd;
+    background: #fff;
     display: inline-block;
     position: relative;
-    border: 1px solid #ddd;
+    border: 1px solid #fff;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -69,7 +92,7 @@
     content: "";
     display: inline-block;
     border: 10px solid transparent;
-    border-right-color: #ddd;
+    border-right-color: #fff;
     position: absolute;
     left: -20px;
     top: 13px;
@@ -79,7 +102,7 @@
     content: "";
     display: inline-block;
     border: 9px solid transparent;
-    border-right-color: #ddd;
+    border-right-color: #fff;
     position: absolute;
     left: -18px;
     top: 13px;
@@ -87,10 +110,10 @@
 }
 
 .chatTimeLineMessageMention pre{
-    background: #ddd;
+    background: #fff;
     display: inline-block;
     position: relative;
-    border: 1px solid #ddd;
+    border: 1px solid #fff;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -101,7 +124,7 @@
     content: "";
     display: inline-block;
     border: 10px solid transparent;
-    border-right-color: #ddd;
+    border-right-color: #fff;
     position: absolute;
     left: -20px;
     margin-top: -9px;
@@ -110,17 +133,17 @@
     content: "";
     display: inline-block;
     border: 9px solid transparent;
-    border-right-color: #ddd;
+    border-right-color: #fff;
     position: absolute;
     left: -18px;
     margin-top: -8px;
 }
 
 .chatTimeLineMessageMine pre{
-    background: #ddd;
+    background: #fff;
     display: inline-block;
     position: relative;
-    border: 1px solid #ddd;
+    border: 1px solid #fff;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -132,7 +155,7 @@
     content: "";
     display: inline-block;
     border: 10px solid transparent;
-    border-left-color: #ddd;
+    border-left-color: #fff;
     position: absolute;
     left:auto;
     right: -20px;
@@ -142,7 +165,7 @@
     content: "";
     display: inline-block;
     border: 9px solid transparent;
-    border-left-color: #ddd;
+    border-left-color: #fff;
     position: absolute;
     left:auto;
     right: -18px;
