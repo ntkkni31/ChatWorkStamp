@@ -171,3 +171,25 @@
     right: -18px;
     margin-top: -8px;
 }
+
+.chatTimeLineMessage pre.hasImagePreview {
+    background: rgba(255, 255, 255, 0.0);
+    border: 1px solid rgba(255, 255, 255, 0.0);
+}
+.chatTimeLineMessage pre.hasImagePreview:before {
+    border-left-color: rgba(255, 255, 255, 0.0);
+    border-right-color: rgba(255, 255, 255, 0.0);
+}
+.chatTimeLineMessage pre.hasImagePreview:after {
+    border-left-color: rgba(255, 255, 255, 0.0);
+    border-right-color: rgba(255, 255, 255, 0.0);
+}
+
+@-webkit-keyframes elementInserted {  
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+div._chatTimeLineMessageBox.chatTimeLineMessageInner > div.chatTimeLineMessageArea.clearfix > pre > div > img.imagePreview {
+  -webkit-animation: elementInserted 0.001s 1;
+}

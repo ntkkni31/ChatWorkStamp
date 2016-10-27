@@ -132,135 +132,143 @@ function loadGallery(gallery) {
 (function() {
   if (!isChatPage()) return;
 
-    var wrapperDiv = $("#_wrapper");
-    
-    // stamp一覧ツールチップ用div生成
-    var stampListDiv = createTooltipDivElement("_stampList");
+  var wrapperDiv = $("#_wrapper");
+  
+  // stamp一覧ツールチップ用div生成
+  var stampListDiv = createTooltipDivElement("_stampList");
 
-    var stampGallery = $("<ul>");
-    stampGallery.attr("id", "_stampGallery")
-      .css("overflow", "auto")
-      .height("271px");
+  var stampGallery = $("<ul>");
+  stampGallery.attr("id", "_stampGallery")
+    .css("overflow", "auto")
+    .height("271px");
+  
+  stampListDiv.append(stampGallery);
+  
+  var tooltipFooter = $("<div>");
+  tooltipFooter.addClass("tooltipFooter")
+    .html('"Shift" to multi-select, "Ctrl" to send');
+  
+  stampListDiv.append(tooltipFooter);
+  
+  wrapperDiv.append(stampListDiv);
+  
+  // タグ一覧ツールチップ用div生成
+  var tagListDiv = createTooltipDivElement("_tagList");
+  
+  var tagList = $("<ul>");
+  tagList.css("overflow", "auto")
+    .height("99%");
+  
+  var tagNames = ["info", "title", "code", "qt"];
+  for(var i = 0; i < tagNames.length; i++) {
+    var tagElem = $("<li>");
+    tagElem.html(tagNames[i]);
     
-    stampListDiv.append(stampGallery);
+    tagElem.click(function() {
+      var tag = "[" + $(this).html() + "][/" + $(this).html() + "]";
+      insertTag(tag);
+      closeTooltip("_tagList");
+    });
     
-    var tooltipFooter = $("<div>");
-    tooltipFooter.addClass("tooltipFooter")
-      .html('"Shift" to multi-select, "Ctrl" to send');
+    tagList.append(tagElem);
+  }
+  
+  tagListDiv.append(tagList);
+  
+  wrapperDiv.append(tagListDiv);
+  
+  //////
+  
+  var chatToolbarEl = $("#_chatSendTool");
+
+  // stampボタン
+  var stampBtn = createButtonElement({
+    id: "_showStampSelect",
+    label: "Stamps: express yourself!",
+    iconClass: ["icoFontFile", "icoSizeLarge"]
+  });
+  
+  stampBtn.click(function() {
+    var list = $("#_stampList");
     
-    stampListDiv.append(tooltipFooter);
+    if(closeTooltip("_stampList")) return;
     
-    wrapperDiv.append(stampListDiv);
+    $("#_chatFileAll").click(); // ファイル一覧をロードさせる
+    $("#_chatFileAll").click(); // ポップアップが開いてしまうので、もう一回クリックで閉じる
     
-    // タグ一覧ツールチップ用div生成
-    var tagListDiv = createTooltipDivElement("_tagList");
+    var gallery = $("#_stampGallery");
+    gallery.empty();
     
-    var tagList = $("<ul>");
-    tagList.css("overflow", "auto")
-      .height("99%");
-    
-    var tagNames = ["info", "title", "code", "qt"];
-    for(var i = 0; i < tagNames.length; i++) {
-      var tagElem = $("<li>");
-      tagElem.html(tagNames[i]);
-      
-      tagElem.click(function() {
-        var tag = "[" + $(this).html() + "][/" + $(this).html() + "]";
-        insertTag(tag);
-        closeTooltip("_tagList");
-      });
-      
-      tagList.append(tagElem);
+    if(!$("#_chatFileAll").hasClass("btnDisable")) {
+      loadGallery(gallery);
     }
     
-    tagListDiv.append(tagList);
+    var tooltipHeight = 300;
+    var tooltipWidth = $("#_chatContent").width() - 12;
+    var tooltipPosX = $(this).offset().left - 150;
+    var tooltipPosY = $(this).offset().top - tooltipHeight - 14;
     
-    wrapperDiv.append(tagListDiv);
+    list.css("left", tooltipPosX)
+      .css("top", tooltipPosY)
+      .css("z-index", "1001")
+      .width(tooltipWidth)
+      .height(tooltipHeight);
     
-    //////
+    var listTriangle = $("#_stampListTriangle");
+    listTriangle.css("left", $(this).offset().left - tooltipPosX + 4);
     
-    var chatToolbarEl = $("#_chatSendTool");
+    list.show();
+  });
+  
+  chatToolbarEl.append(stampBtn);
+  
+  var tagBtn = createButtonElement({
+    id: "_showTagSelect",
+    label: "Tags",
+    iconClass: ["icoFontActionEdit", "icoSizeLarge"]
+  });
+  
+  tagBtn.click(function() {
+    var list = $("#_tagList");
+    
+    if(closeTooltip("_tagList")) return;
+    
+    var tooltipHeight = 95;
+    var tooltipWidth = 70;
+    var tooltipPosX = $(this).offset().left - 25;
+    var tooltipPosY = $(this).offset().top - tooltipHeight - 14;
+    
+    list.css("left", tooltipPosX)
+      .css("top", tooltipPosY)
+      .css("z-index", "1001")
+      .width(tooltipWidth)
+      .height(tooltipHeight);
+    
+    var listTriangle = $("#_tagListTriangle");
+    listTriangle.css("left", $(this).offset().left - tooltipPosX + 4);
+    
+    list.show();
+  });
+  
+  chatToolbarEl.append(tagBtn);
+  
+  // 別のところをクリックしたら自動的にポップアップを消す
+  $(document).on('click', function(evt){
+    if( !$(evt.target).closest('#_stampList').length && 
+      !$(evt.target).closest('#_showStampSelect').length){
+      closeTooltip("_stampList");
+    }
+    if( !$(evt.target).closest('#_tagList').length && 
+      !$(evt.target).closest('#_showTagSelect').length){
+      closeTooltip("_tagList");
+    }
+  });
+  
+  document.addEventListener('webkitAnimationStart', function(event){
+    if (event.animationName == 'elementInserted') {
+      var evTarget = $(event.target);
+      evTarget.parent().parent().addClass("hasImagePreview");
+    }
+  }, true);
 
-    // stampボタン
-    var stampBtn = createButtonElement({
-      id: "_showStampSelect",
-      label: "Stamps: express yourself!",
-      iconClass: ["icoFontFile", "icoSizeLarge"]
-    });
-    
-    stampBtn.click(function() {
-      var list = $("#_stampList");
-      
-      if(closeTooltip("_stampList")) return;
-      
-      $("#_chatFileAll").click(); // ファイル一覧をロードさせる
-      $("#_chatFileAll").click(); // ポップアップが開いてしまうので、もう一回クリックで閉じる
-      
-      var gallery = $("#_stampGallery");
-      gallery.empty();
-      
-      if(!$("#_chatFileAll").hasClass("btnDisable")) {
-        loadGallery(gallery);
-      }
-      
-      var tooltipHeight = 300;
-      var tooltipWidth = $("#_chatContent").width() - 12;
-      var tooltipPosX = $(this).offset().left - 150;
-      var tooltipPosY = $(this).offset().top - tooltipHeight - 14;
-      
-      list.css("left", tooltipPosX)
-        .css("top", tooltipPosY)
-        .css("z-index", "1001")
-        .width(tooltipWidth)
-        .height(tooltipHeight);
-      
-      var listTriangle = $("#_stampListTriangle");
-      listTriangle.css("left", $(this).offset().left - tooltipPosX + 4);
-      
-      list.show();
-    });
-    
-    chatToolbarEl.append(stampBtn);
-    
-    var tagBtn = createButtonElement({
-      id: "_showTagSelect",
-      label: "Tags",
-      iconClass: ["icoFontActionEdit", "icoSizeLarge"]
-    });
-    
-    tagBtn.click(function() {
-      var list = $("#_tagList");
-      
-      if(closeTooltip("_tagList")) return;
-      
-      var tooltipHeight = 95;
-      var tooltipWidth = 70;
-      var tooltipPosX = $(this).offset().left - 25;
-      var tooltipPosY = $(this).offset().top - tooltipHeight - 14;
-      
-      list.css("left", tooltipPosX)
-        .css("top", tooltipPosY)
-        .css("z-index", "1001")
-        .width(tooltipWidth)
-        .height(tooltipHeight);
-      
-      var listTriangle = $("#_tagListTriangle");
-      listTriangle.css("left", $(this).offset().left - tooltipPosX + 4);
-      
-      list.show();
-    });
-    
-    chatToolbarEl.append(tagBtn);
-    
-    // 別のところをクリックしたら自動的にポップアップを消す
-    $(document).on('click', function(evt){
-      if( !$(evt.target).closest('#_stampList').length && 
-        !$(evt.target).closest('#_showStampSelect').length){
-        closeTooltip("_stampList");
-      }
-      if( !$(evt.target).closest('#_tagList').length && 
-        !$(evt.target).closest('#_showTagSelect').length){
-        closeTooltip("_tagList");
-      }
-    });
 })();
