@@ -1,0 +1,22 @@
+.chatInput__stamp {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=$ie-opacity);
+    opacity: 0.8;
+    display: inline-block;
+    padding: 0 5px;
+    cursor: pointer;
+}
+.chatInput__stamp:hover {
+    opacity: 1;
+}
+.chatInput__tag {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=$ie-opacity);
+    opacity: 0.8;
+    display: inline-block;
+    padding: 0 5px;
+    cursor: pointer;
+}
+.chatInput__tag:hover {
+    opacity: 1;
+}

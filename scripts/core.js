@@ -23,7 +23,11 @@ function createButtonElement(args){
     
     elem.attr("role", "button");
     elem.addClass("_showDescription");
-
+    if(args.buttonClass){
+      for(var i = 0; i < args.buttonClass.length; i++){
+        elem.addClass(args.buttonClass[i]);
+      }
+    }
     elem.css("display", "inline-block");
 
     elem.attr("id", args.id);
@@ -185,7 +189,8 @@ function loadGallery(gallery) {
   var stampBtn = createButtonElement({
     id: "_showStampSelect",
     label: "Stamps: express yourself!",
-    iconClass: ["icoFontFile", "icoSizeLarge"]
+    iconClass: ["icoFontFile", "icoSizeLarge"],
+    buttonClass: ["chatInput__stamp"]
   });
   
   stampBtn.click(function() {
@@ -225,7 +230,8 @@ function loadGallery(gallery) {
   var tagBtn = createButtonElement({
     id: "_showTagSelect",
     label: "Tags",
-    iconClass: ["icoFontActionEdit", "icoSizeLarge"]
+    iconClass: ["icoFontActionEdit", "icoSizeLarge"],
+    buttonClass: ["chatInput__tag"]
   });
   
   tagBtn.click(function() {

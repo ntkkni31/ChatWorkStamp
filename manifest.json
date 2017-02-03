@@ -11,6 +11,7 @@
     },
     "content_scripts": [{
         "matches": ["*://*.chatwork.com/*", "*://chatwork.com/*"],
-        "js": ["scripts/jquery.min.js", "scripts/core.js"]
+        "js": ["scripts/jquery.min.js", "scripts/core.js"],
+        "css": ["css/chatwork_stamp.css"]
     }]
 }
