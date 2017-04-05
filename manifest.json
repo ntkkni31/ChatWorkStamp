@@ -10,8 +10,16 @@
         "128": "images/icon_128.png"
     },
     "content_scripts": [{
-        "matches": ["*://*.chatwork.com/*", "*://chatwork.com/*"],
+        "matches": ["*://*.chatwork.com/*", "*://chatwork.com/*","*://kcw.kddi.ne.jp/*"],
         "js": ["scripts/jquery.min.js", "scripts/core.js"],
         "css": ["css/chatwork_stamp.css"]
-    }]
+    }],
+    "page_action":{
+        "default_icon": "images/icon_16.png",
+        "default_title": "ChatWorkStamp",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": ["scripts/background.js"]
+    }
 }

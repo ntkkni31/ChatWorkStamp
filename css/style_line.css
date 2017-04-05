@@ -2,6 +2,11 @@
 	background-image: url('http://allstar002.up.seesaa.net/image/image-74d21.jpg');
     background-size: cover;
 }
+#_messageSearchResultBox {
+	background-image: url('http://allstar002.up.seesaa.net/image/image-74d21.jpg');
+    background-size: cover;
+}
+
 .dateHead {
     border-top: 0px;
 }
@@ -18,13 +23,27 @@
     color: #ffffff;
 }
 .chatTimeLineMessageMine .avatarSpeaker .avatarMedium {
-    border-radius: 18px 18px 18px 0px;
+    transform: scale(-1, 1);
+}
+.searchResultListBox .chatTimeLineMessageArea {
+    padding: 0 30px 0 68px;
 }
 
 .chatTimeLineBorder {
 	border-top: 0px;
 }
-
+.chatInfo {
+    border-radius: 10px;
+}
+.chatInfo > .title {
+    border-radius: 10px 10px 0 0;
+}
+.chatInfoTaskArea {
+	border-radius: 0 0 10px 10px;
+}
+.chatInfoTaskMetaArea {
+	border-radius: 0 0 10px 10px;
+}
 .chatTimeLineMessage .chatTimeLineMessageInner {
     border-top: 1px solid rgba(255, 255, 255, 0.0) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.0) !important;

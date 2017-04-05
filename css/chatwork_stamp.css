@@ -20,3 +20,6 @@
 .chatInput__tag:hover {
     opacity: 1;
 }
+.chatInput__stamp .icoFontEmoticon {
+    color: #ffb300;
+}
