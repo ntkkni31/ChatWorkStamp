@@ -23,3 +23,24 @@
 .chatInput__stamp .icoFontEmoticon {
     color: #ffb300;
 }
+ul._stampGallery {
+    overflow: auto;
+    height: 271px;
+}
+ul._stampGallery li {
+}
+ul._stampGallery li > div.stamp {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+ul._stampGallery div.stamp img {
+    max-width: 100px;
+    max-height: 100px;
+    vertical-align: top;
+    position: relative;
+}
+#_tagList ul {
+    overflow: auto;
+    height: 99%;
+}

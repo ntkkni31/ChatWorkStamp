@@ -119,18 +119,20 @@ function loadGallery(gallery) {
     var stampLi = $("<li>");
     stampLi.css("display", "inline-block");
     
-    var stampImg = $("<input>");
-    stampImg.attr("type", "image")
+    var stampImg = $("<img>");
+    stampImg
       .attr("src", "https://www.chatwork.com/gateway.php?cmd=preview_file&bin=1&file_id=" + fileId)
-      .width(100)
-      .height(100)
-      .addClass("stamp")
       .attr("title", fileNameElem.text());
-    stampImg.click(function(){
+    
+    var stampDiv = $("<div>")
+      .addClass("stamp")
+      .append(stampImg);
+      
+    stampDiv.click(function(){
       insertStampFunction(fileId);
     });
     
-    stampLi.append(stampImg);
+    stampLi.append(stampDiv);
     
     gallery.append(stampLi);
   });
@@ -174,8 +176,7 @@ chrome.extension.onRequest.addListener(
 
   var stampGallery = $("<ul>");
   stampGallery.attr("id", "_stampGallery")
-    .css("overflow", "auto")
-    .height("271px");
+    .addClass("_stampGallery");
   
   stampListDiv.append(stampGallery);
   
@@ -191,8 +192,6 @@ chrome.extension.onRequest.addListener(
   var tagListDiv = createTooltipDivElement("_tagList");
   
   var tagList = $("<ul>");
-  tagList.css("overflow", "auto")
-    .height("99%");
   
   var tagNames = ["info", "title", "code"];
   for(var i = 0; i < tagNames.length; i++) {
