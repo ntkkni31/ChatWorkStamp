@@ -44,3 +44,19 @@ ul._stampGallery div.stamp img {
     overflow: auto;
     height: 99%;
 }
+#_stampList .tooltipFooter div.tooltipFooterMessage {
+    display: inline-block;
+}
+#_stampList .tooltipFooter div.galleryType {
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+    opacity: 0.8;
+}
+#_stampList .tooltipFooter div.galleryType a {
+    opacity: 0.8;
+}
+#_stampList .tooltipFooter div.galleryType a.selected {
+    opacity: 1;
+    font-weight: bold;
+}

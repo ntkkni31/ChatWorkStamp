@@ -46,11 +46,45 @@ var loadSetting = function() {
     }
 };
 
+// core.js‚©‚ç‚ÌŒÄ‚Ño‚µ
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.method == "getLocalStorage") {
         sendResponse({data: localStorage[settingKey]});
     } else if (request.method == "pageActionShow") {
         chrome.pageAction.show(sender.tab.id);
+        sendResponse({});
+    } else if (request.method == "addRecentStamp") {
+    
+       // Žg‚Á‚½stamp‚Ì•Û‘¶
+       var settingJson = localStorage.getItem(settingKey);
+       var setting = null;
+       if (settingJson) {
+         setting = JSON.parse(settingJson);
+       } else {
+         setting = new Object();
+       }
+       
+       if (!setting["recent_use"]) {
+         setting["recent_use"] = [];
+       }
+       
+       // “¯‚¶‚à‚Ì‚ª‚ ‚ê‚ÎÁ‚·
+       while(true){
+         var duplicateIndex = setting["recent_use"].indexOf(request.value);
+         if(duplicateIndex >= 0) {
+           setting["recent_use"].splice(duplicateIndex, 1);
+         } else {
+           break;
+         }
+       }
+       setting["recent_use"].push(request.value);
+       
+       // Å‘å50ŒÂ•ÛŽ
+       if(setting["recent_use"].length > 50) {
+         setting["recent_use"] = setting["recent_use"].slice(setting["recent_use"].length - 50);
+       }
+       localStorage.setItem(settingKey, JSON.stringify(setting));
+       
         sendResponse({});
     } else {
         sendResponse({});

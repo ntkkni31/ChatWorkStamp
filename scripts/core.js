@@ -89,6 +89,7 @@ function insertTag(tag) {
   chatTextArea.setSelectionRange(caretPos, caretPos);
 }
 
+// stampがクリックされたときの処理
 function insertStampFunction(previewId) {
   var tag = "[preview id=" + previewId + " ht=" + stampSize + "]";
 
@@ -103,6 +104,9 @@ function insertStampFunction(previewId) {
   if(event.ctrlKey){
     $("#_sendButton").click();
   }
+  
+  // ローカルストレージに保存
+  chrome.runtime.sendMessage({method: "addRecentStamp", value: previewId }, function(response) {});
 }
 
 function loadGallery(gallery) {
@@ -138,6 +142,38 @@ function loadGallery(gallery) {
   });
 }
 
+function loadRecentUseGallery(gallery) {
+  chrome.runtime.sendMessage({method: "getLocalStorage"}, function(response) {
+    if(response.data) {
+      var setting = JSON.parse(response.data);
+      if (setting["recent_use"]) {
+        for (var i = 0; i < setting["recent_use"].length; i++) {
+          var fileId = setting["recent_use"][setting["recent_use"].length - 1 - i];
+          
+          var stampLi = $("<li>");
+          stampLi.css("display", "inline-block");
+          
+          var stampImg = $("<img>");
+          stampImg
+            .attr("src", "https://www.chatwork.com/gateway.php?cmd=preview_file&bin=1&file_id=" + fileId);
+          
+          var stampDiv = $("<div>")
+            .addClass("stamp")
+            .append(stampImg);
+            
+          stampDiv.click(function(){
+            insertStampFunction(fileId);
+          });
+          
+          stampLi.append(stampDiv);
+          
+          gallery.append(stampLi);
+        }
+      }
+    }
+  });
+}
+
 // LINEスタイルの適用
 function applyLineStyle(isApply) {
   if(isApply){
@@ -167,22 +203,45 @@ chrome.extension.onRequest.addListener(
 (function() {
   if (!isChatPage()) return;
   
-  // $("body").append($("<sc" + "ript>var layzr = new Layzr({});</sc" + "ript>"));
-  
   var wrapperDiv = $("#_wrapper");
   
   // stamp一覧ツールチップ用div生成
   var stampListDiv = createTooltipDivElement("_stampList");
 
-  var stampGallery = $("<ul>");
-  stampGallery.attr("id", "_stampGallery")
-    .addClass("_stampGallery");
-  
-  stampListDiv.append(stampGallery);
+  // 最近追加したスタンプ
+  var stampGalleryRecentAdd = $("<ul>");
+  stampGalleryRecentAdd.attr("id", "_stampGalleryRecentAdd")
+    .addClass("_stampGallery")
+    .addClass("recentAdd")
+    .css("display", "block");
+    
+  var stampGalleryRecentUse = $("<ul>");
+  stampGalleryRecentUse.attr("id", "_stampGalleryRecentUse")
+    .addClass("_stampGallery")
+    .addClass("recentUse")
+    .css("display", "none");
+    
+  stampListDiv.append(stampGalleryRecentAdd);
+  stampListDiv.append(stampGalleryRecentUse);
   
   var tooltipFooter = $("<div>");
   tooltipFooter.addClass("tooltipFooter")
-    .html('"Shift" to multi-select, "Ctrl" to send');
+    .append($('<div class="tooltipFooterMessage">"Shift" to multi-select, "Ctrl" to send</div>'))
+    .append($('<div class="galleryType"><a class="typeRecentAdd selected">recent add</a> | <a class="typeRecentUse">recent use</a></div>'));
+  
+  $(document).on("click", "#_stampList .galleryType .typeRecentAdd", function() {
+    stampGalleryRecentAdd.show();
+    stampGalleryRecentUse.hide();
+    $("#_stampList .galleryType .typeRecentAdd").addClass("selected");
+    $("#_stampList .galleryType .typeRecentUse").removeClass("selected");
+  });
+  
+  $(document).on("click", "#_stampList .galleryType .typeRecentUse", function() {
+    stampGalleryRecentAdd.hide();
+    stampGalleryRecentUse.show();
+    $("#_stampList .galleryType .typeRecentAdd").removeClass("selected");
+    $("#_stampList .galleryType .typeRecentUse").addClass("selected");
+  });
   
   stampListDiv.append(tooltipFooter);
   
@@ -231,11 +290,15 @@ chrome.extension.onRequest.addListener(
     $("#_chatFileAll").click(); // ファイル一覧をロードさせる
     $("#_chatFileAll").click(); // ポップアップが開いてしまうので、もう一回クリックで閉じる
     
-    var gallery = $("#_stampGallery");
-    gallery.empty();
+    var galleryRecentAdd = $("#_stampGalleryRecentAdd");
+    galleryRecentAdd.empty();
+    
+    var galleryRecentUse = $("#_stampGalleryRecentUse");
+    galleryRecentUse.empty();
     
     if(!$("#_chatFileAll").hasClass("btnDisable")) {
-      loadGallery(gallery);
+      loadGallery(galleryRecentAdd);
+      loadRecentUseGallery(galleryRecentUse);
     }
     
     var tooltipHeight = 300;
@@ -257,6 +320,7 @@ chrome.extension.onRequest.addListener(
   
   chatToolbarEl.append(stampBtn);
   
+  // タグ一覧ボタン
   var tagBtn = createButtonElement({
     id: "_showTagSelect",
     label: "Tags",
