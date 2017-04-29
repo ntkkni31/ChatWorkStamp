@@ -105,8 +105,9 @@ function insertStampFunction(previewId) {
     $("#_sendButton").click();
   }
   
+  var rid = location.hash.replace("#!", "");
   // ローカルストレージに保存
-  chrome.runtime.sendMessage({method: "addRecentStamp", value: previewId }, function(response) {});
+  chrome.runtime.sendMessage({method: "addRecentStamp", value: previewId, roomid: rid }, function(response) {});
 }
 
 function loadGallery(gallery) {
@@ -146,9 +147,11 @@ function loadRecentUseGallery(gallery) {
   chrome.runtime.sendMessage({method: "getLocalStorage"}, function(response) {
     if(response.data) {
       var setting = JSON.parse(response.data);
-      if (setting["recent_use"]) {
-        for (var i = 0; i < setting["recent_use"].length; i++) {
-          var fileId = setting["recent_use"][setting["recent_use"].length - 1 - i];
+      var rid = location.hash.replace("#!", "");
+      
+      if (setting.recent_use && setting.recent_use[rid]) {
+        for (var i = 0; i < setting.recent_use[rid].length; i++) {
+          var fileId = setting.recent_use[rid][setting.recent_use[rid].length - 1 - i];
           
           var stampLi = $("<li>");
           stampLi.css("display", "inline-block");
@@ -170,6 +173,7 @@ function loadRecentUseGallery(gallery) {
           gallery.append(stampLi);
         }
       }
+      
     }
   });
 }

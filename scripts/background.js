@@ -46,7 +46,7 @@ var loadSetting = function() {
     }
 };
 
-// core.js‚©‚ç‚ÌŒÄ‚Ño‚µ
+// core.jsã‹ã‚‰ã®å‘¼ã³å‡ºã—
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.method == "getLocalStorage") {
         sendResponse({data: localStorage[settingKey]});
@@ -54,8 +54,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         chrome.pageAction.show(sender.tab.id);
         sendResponse({});
     } else if (request.method == "addRecentStamp") {
-    
-       // Žg‚Á‚½stamp‚Ì•Û‘¶
+       var rid = request.roomid;
+       
+       // ä½¿ã£ãŸstampã®ä¿å­˜
        var settingJson = localStorage.getItem(settingKey);
        var setting = null;
        if (settingJson) {
@@ -64,25 +65,35 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
          setting = new Object();
        }
        
-       if (!setting["recent_use"]) {
-         setting["recent_use"] = [];
+       var recentSetting = null;
+       if (setting.recent_use && !Array.isArray(setting.recent_use)) {
+         recentSetting = setting["recent_use"];
+       } else {
+         recentSetting = {};
        }
        
-       // “¯‚¶‚à‚Ì‚ª‚ ‚ê‚ÎÁ‚·
+       if (!recentSetting[rid]) {
+         recentSetting[rid] = [];
+       }
+       
+       // åŒã˜ã‚‚ã®ãŒã‚ã‚Œã°æ¶ˆã™
        while(true){
-         var duplicateIndex = setting["recent_use"].indexOf(request.value);
+         var duplicateIndex = recentSetting[rid].indexOf(request.value);
          if(duplicateIndex >= 0) {
-           setting["recent_use"].splice(duplicateIndex, 1);
+           recentSetting[rid].splice(duplicateIndex, 1);
          } else {
            break;
          }
        }
-       setting["recent_use"].push(request.value);
+       recentSetting[rid].push(request.value);
        
-       // Å‘å50ŒÂ•ÛŽ
-       if(setting["recent_use"].length > 50) {
-         setting["recent_use"] = setting["recent_use"].slice(setting["recent_use"].length - 50);
+       // æœ€å¤§30å€‹ä¿æŒ
+       if(recentSetting[rid].length > 30) {
+         recentSetting[rid] = recentSetting[rid].slice(recentSetting[rid].length - 30);
        }
+       
+       setting.recent_use = recentSetting;
+       
        localStorage.setItem(settingKey, JSON.stringify(setting));
        
         sendResponse({});
