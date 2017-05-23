@@ -131,10 +131,12 @@ function loadGallery(gallery) {
     
     var stampDiv = $("<div>")
       .addClass("stamp")
+      .attr("stamp_id", fileId)
       .append(stampImg);
       
     stampDiv.click(function(){
-      insertStampFunction(fileId);
+      var fid = $(this).attr("stamp_id");
+      insertStampFunction(fid);
     });
     
     stampLi.append(stampDiv);
@@ -162,10 +164,12 @@ function loadRecentUseGallery(gallery) {
           
           var stampDiv = $("<div>")
             .addClass("stamp")
+            .attr("stamp_id", fileId)
             .append(stampImg);
             
           stampDiv.click(function(){
-            insertStampFunction(fileId);
+            var fid = $(this).attr("stamp_id");
+            insertStampFunction(fid);
           });
           
           stampLi.append(stampDiv);
