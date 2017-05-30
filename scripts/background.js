@@ -1,6 +1,7 @@
 var settingKey = "chatworkstamp_setting"; 
 var useLineStyle = false;
 var stampSize = 100;
+var recentStampCount = 50;
 
 var getUseLineStyle = function() {
     return useLineStyle;
@@ -87,9 +88,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
        }
        recentSetting[rid].push(request.value);
        
-       // 最大30個保持
-       if(recentSetting[rid].length > 30) {
-         recentSetting[rid] = recentSetting[rid].slice(recentSetting[rid].length - 30);
+       // 最大n個保持
+       if(recentSetting[rid].length > recentStampCount) {
+         recentSetting[rid] = recentSetting[rid].slice(recentSetting[rid].length - recentStampCount);
        }
        
        setting.recent_use = recentSetting;
