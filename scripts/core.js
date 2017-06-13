@@ -111,7 +111,7 @@ function insertStampFunction(previewId) {
 }
 
 function loadGallery(gallery) {
-  $("#_chatFileListTip ul._cwLTList").children("li").each(function(i, elem) {
+  $("#_roomFileListTip ul._cwLTList").children("li").each(function(i, elem) {
     var fileNameElem = $(elem).find("p._fileName");
     if(!fileNameElem) return true; // continue
     
