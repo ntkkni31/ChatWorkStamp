@@ -54,14 +54,14 @@ function createTooltipDivElement(id) {
     var listDiv = $("<div>");
     listDiv.attr("id", id)
       .attr("role", "tooltip")
-      .addClass("toolTip toolTipWhite mainContetTooltip")
+      .addClass("toolTip tooltip--white stampTooltip")
       .css("opacity", "1")
       .css("z-index", "1")
       .css("display", "none");
       
     var triangle = $("<div>");
     triangle.attr("id", id + "Triangle")
-      .addClass("_cwTTTriangle toolTipTriangle toolTipTriangleWhiteBottom");
+      .addClass("_cwTTTriangle tooltipTriangle tooltipTriangle--whiteBottom");
     
     listDiv.append(triangle);
     

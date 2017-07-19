@@ -28,6 +28,16 @@ ul._stampGallery {
     height: 271px;
 }
 ul._stampGallery li {
+    float: left;
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    transition: border .2s linear 0s;
+}
+ul._stampGallery li:hover{
+    background:#dcf0fa;
+    border-color:#b1d6ed
 }
 ul._stampGallery li > div.stamp {
     width: 100px;
@@ -44,6 +54,18 @@ ul._stampGallery div.stamp img {
     overflow: auto;
     height: 99%;
 }
+#_tagList ul li {
+    //float: left;
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    transition: border .2s linear 0s;
+}
+#_tagList ul li:hover{
+    background:#dcf0fa;
+    border-color:#b1d6ed
+}
 #_stampList .tooltipFooter div.tooltipFooterMessage {
     display: inline-block;
 }
@@ -59,4 +81,12 @@ ul._stampGallery div.stamp img {
 #_stampList .tooltipFooter div.galleryType a.selected {
     opacity: 1;
     font-weight: bold;
+}
+
+.stampTooltip {
+    border-radius: 5px;
+    display: none;
+    position: absolute;
+    padding: 2px;
+    z-index: 2;
 }
