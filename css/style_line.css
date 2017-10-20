@@ -7,7 +7,7 @@
     background-size: cover;
 }
 
-.dateHead {
+.dateHead, .timeLine__dateHead {
     border-top: 0px;
 }
 .dateContent {
@@ -15,6 +15,14 @@
     border-radius: 15px 15px 15px 15px;
     background: rgba(100, 100, 100, 0.3);
     padding: 0px 8px;
+}
+.timeLine__dateHeadBody {
+    border-radius: 15px 15px 15px 15px;
+    background: rgba(100, 100, 100, 0.3);
+    padding: 0px 8px;
+}
+.timeLine__dateHeadBody .timeLine__dateHeadText {
+    color: #ffffff;
 }
 .timeStamp {
     color: #ffffff;
@@ -32,6 +40,9 @@
 .chatTimeLineBorder {
 	border-top: 0px;
 }
+.timelineMessage--border {
+	border-top: 1px solid rgba(255, 255, 255, 0.0);
+}
 .chatInfo {
     border-radius: 10px;
 }
@@ -44,16 +55,16 @@
 .chatInfoTaskMetaArea {
 	border-radius: 0 0 10px 10px;
 }
-.chatTimeLineMessage .chatTimeLineMessageInner {
+.chatTimeLineMessage .chatTimeLineMessageInner, .timelineMessage__body {
     border-top: 1px solid rgba(255, 255, 255, 0.0) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.0) !important;
 }
-.chatTimeLineMessage .chatTimeLineMessageHover {
+.chatTimeLineMessage .chatTimeLineMessageHover, ._chatTimeLineMessageBox.timelineMessage__body.chatTimeLineMessageHover {
   background: rgba(248, 251, 255, 0.5) !important;
   /*border-top: 1px solid #B1D6ED !important;
   border-bottom: 1px solid #B1D6ED !important;*/
 }
-.chatTimeLineMessage .actionNav {
+.chatTimeLineMessage .actionNav, .timelineMessage__body .actionArea {
   background: rgba(248, 251, 255, 0.5) !important;
 }
 
@@ -86,19 +97,19 @@
   margin-top: 15px;
 }
 
-.chatTimeLineMessageMention {
+.chatTimeLineMessageMention, .timelineMessage--mention {
   background: rgba(255, 255, 255, 0.0) !important;
 }
-.chatTimeLineMessageMention .chatTimeLineMessageHover {
+.chatTimeLineMessageMention .chatTimeLineMessageHover, .timelineMessage--mention.chatTimeLineMessageHover {
   background: rgba(231, 239, 228, 0.5) !important;
   /*border-top: 1px solid #AED6AD !important;
   border-bottom: 1px solid #AED6AD !important;*/
 }
-.chatTimeLineMessageMention .actionNav {
+.chatTimeLineMessageMention .actionNav, .timelineMessage--mention .actionArea {
   background: rgba(231, 239, 228, 0.5) !important;
 }
 
-.chatTimeLineMessage pre{
+.chatTimeLineMessage pre, pre.timelineMessage__message {
     background: #fff;
     display: inline-block;
     position: relative;
@@ -110,7 +121,7 @@
     padding: 3px 10px;
     max-width: 90%;
 }
-.chatTimeLineMessage pre:before {
+.chatTimeLineMessage pre:before, pre.timelineMessage__message:before {
     content: "";
     display: inline-block;
 	border-style: solid;
@@ -122,7 +133,7 @@
     margin-top: -9px;
     z-index: -1;
 }
-.chatTimeLineMessage pre:after {
+.chatTimeLineMessage pre:after, pre.timelineMessage__message:after {
     content: "";
     display: inline-block;
 	border-style: solid;
@@ -134,14 +145,14 @@
     margin-top: -10px;
 }
 
-.chatTimeLineMessageMention pre{
+.chatTimeLineMessageMention pre, .timelineMessage__body--mention pre.timelineMessage__message {
     background: #bfff7f;
     display: inline-block;
     position: relative;
     border: 1px solid #bfff7f;
     margin-left: 10px;
 }
-.chatTimeLineMessageMention pre:before {
+.chatTimeLineMessageMention pre:before, .timelineMessage__body--mention pre.timelineMessage__message:before {
     content: "";
     display: inline-block;
 	border-width: 9px 9px 0 9px;
@@ -150,7 +161,7 @@
     left: -10px;
     margin-top: -9px;
 }
-.chatTimeLineMessageMention pre:after {
+.chatTimeLineMessageMention pre:after, .timelineMessage__body--mention pre.timelineMessage__message:after {
     content: "";
     display: inline-block;
 	border-width: 12px 12px 0 12px;
@@ -190,14 +201,14 @@
 }
 
 
-.chatTimeLineMessage pre.hasImagePreview {
+.chatTimeLineMessage pre.hasImagePreview, pre.timelineMessage__message.hasImagePreview {
     background: rgba(255, 255, 255, 0.0);
     border: 1px solid rgba(255, 255, 255, 0.0);
 }
-.chatTimeLineMessage pre.hasImagePreview:before {
+.chatTimeLineMessage pre.hasImagePreview:before, pre.timelineMessage__message.hasImagePreview:before {
     border-color: rgba(255, 255, 255, 0.0);
 }
-.chatTimeLineMessage pre.hasImagePreview:after {
+.chatTimeLineMessage pre.hasImagePreview:after, pre.timelineMessage__message.hasImagePreview:after {
     border-color: rgba(255, 255, 255, 0.0);
 }
 
@@ -206,6 +217,7 @@
   100% {opacity: 1;}
 }
 
-div._chatTimeLineMessageBox.chatTimeLineMessageInner > div.chatTimeLineMessageArea.clearfix > pre > div > img.imagePreview {
+div._chatTimeLineMessageBox.chatTimeLineMessageInner > div.chatTimeLineMessageArea.clearfix > pre > div > img.imagePreview,
+.timelineMessage__message > div > img._filePreview.imagePreview {
   -webkit-animation: elementInserted 0.001s 1;
 }
