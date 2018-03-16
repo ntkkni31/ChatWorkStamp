@@ -1,6 +1,6 @@
 {
     "name": "ChatWork Stamp",
-    "version": "1.1.10",
+    "version": "1.1.11",
     "manifest_version": 2,
     "description": "ChatWorkのpreviewタグを入力する機能",
     "content_security_policy": "script-src 'self'; object-src 'self'",

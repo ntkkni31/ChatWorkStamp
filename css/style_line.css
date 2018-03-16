@@ -76,16 +76,16 @@ p._speakerName.timelineMessage__userName {
   background: rgba(248, 251, 255, 0.5) !important;
 }
 
-.chatTimeLineMessageMine {
+.chatTimeLineMessageMine, .timelineMessage--mine {
   text-align: right;
   background: rgba(255, 255, 255, 0.0) !important;
 }
-.chatTimeLineMessageMine .chatTimeLineMessageHover {
+.chatTimeLineMessageMine .chatTimeLineMessageHover, .timelineMessage--mine.chatTimeLineMessageHover {
   background: rgba(248, 251, 255, 0.5) !important;
   /*border-top: 1px solid #ffc0cb !important;
   border-bottom: 1px solid #ffc0cb !important;*/
 }
-.chatTimeLineMessageMine .actionNav {
+.chatTimeLineMessageMine .actionNav, .timelineMessage--mine .activeNav {
   background: rgba(255, 239, 239, 0.5) !important;
   border-right: 1px solid #ffc0cb !important;
   border-bottom: 1px solid #ffc0cb !important;
@@ -100,14 +100,13 @@ p._speakerName.timelineMessage__userName {
 .chatTimeLineMessageMine .chatCode{
   text-align: left;
 }
-.chatTimeLineMessageMine .avatarSpeaker {
+.chatTimeLineMessageMine .avatarSpeaker, .timelineMessage--mine ._speaker.timelineMessage__avatar {
   float: right;
   margin-top: 15px;
 }
 
 .chatTimeLineMessageMention, .timelineMessage--mention {
   background: rgba(255, 255, 255, 0.0) !important;
-  border-top: 1px solid rgba(221, 235, 215, 0);
   border-bottom: 1px solid rgba(221, 235, 215, 0);
 }
 .chatTimeLineMessageMention .chatTimeLineMessageHover, .timelineMessage--mention.chatTimeLineMessageHover {
@@ -181,7 +180,7 @@ p._speakerName.timelineMessage__userName {
     margin-top: -10px;
 }
 
-.chatTimeLineMessageMine pre{
+.chatTimeLineMessageMine pre, .timelineMessage--mine pre.timelineMessage__message {
     background: #bfff7f;
     display: inline-block;
     position: relative;
@@ -189,7 +188,7 @@ p._speakerName.timelineMessage__userName {
     text-align:left;
     right:10px;
 }
-.chatTimeLineMessageMine pre:before {
+.chatTimeLineMessageMine pre:before, .timelineMessage--mine pre.timelineMessage__message:before {
     content: "";
     display: inline-block;
 	border-width: 9px 9px 0 9px;
@@ -199,7 +198,7 @@ p._speakerName.timelineMessage__userName {
     right: -9px;
     margin-top: -9px;
 }
-.chatTimeLineMessageMine pre:after {
+.chatTimeLineMessageMine pre:after, .timelineMessage--mine pre.timelineMessage__message:after {
     content: "";
     display: inline-block;
 	border-width: 12px 12px 0 12px;
@@ -229,5 +228,9 @@ p._speakerName.timelineMessage__userName {
 
 div._chatTimeLineMessageBox.chatTimeLineMessageInner > div.chatTimeLineMessageArea.clearfix > pre > div > img.imagePreview,
 .timelineMessage__message > div > img._filePreview.imagePreview {
-  -webkit-animation: elementInserted 0.001s 1;
+    -webkit-animation: elementInserted 0.001s 1;
+}
+
+li._cwABAction.actionNav__item[data-cwui-ab-type="edit"] {
+	-webkit-animation: elementInserted 0.001s 1;
 }
