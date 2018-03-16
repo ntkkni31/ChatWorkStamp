@@ -67,7 +67,7 @@ p._speakerName.timelineMessage__userName {
     border-top: 1px solid rgba(255, 255, 255, 0.0) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.0) !important;
 }
-.chatTimeLineMessage .chatTimeLineMessageHover, ._chatTimeLineMessageBox.timelineMessage__body.chatTimeLineMessageHover {
+.chatTimeLineMessage .chatTimeLineMessageHover, ._chatTimeLineMessageBox.timelineMessage__body.chatTimeLineMessageHover, .timelineMessage:hover {
   background: rgba(248, 251, 255, 0.5) !important;
   /*border-top: 1px solid #B1D6ED !important;
   border-bottom: 1px solid #B1D6ED !important;*/
@@ -107,6 +107,8 @@ p._speakerName.timelineMessage__userName {
 
 .chatTimeLineMessageMention, .timelineMessage--mention {
   background: rgba(255, 255, 255, 0.0) !important;
+  border-top: 1px solid rgba(221, 235, 215, 0);
+  border-bottom: 1px solid rgba(221, 235, 215, 0);
 }
 .chatTimeLineMessageMention .chatTimeLineMessageHover, .timelineMessage--mention.chatTimeLineMessageHover {
   background: rgba(231, 239, 228, 0.5) !important;
