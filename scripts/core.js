@@ -208,7 +208,7 @@ chrome.extension.onRequest.addListener(
   }
 );
 
-(function() {
+function initialize() {
   if (!isChatPage()) return;
   
   var wrapperDiv = $("#_wrapper");
@@ -401,4 +401,16 @@ chrome.extension.onRequest.addListener(
   });
   
   chrome.runtime.sendMessage({method: "pageActionShow"}, function(response) {});
-})();
+}
+
+var cnt = 10;
+var intervalFn = setInterval(function () {
+    --cnt;
+    if (isChatPage()) {
+        initialize();
+        clearInterval(intervalFn);
+    }
+    if (!cnt) {
+        clearInterval(intervalFn);
+    }
+}, 500);
