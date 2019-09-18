@@ -210,6 +210,7 @@ chrome.extension.onRequest.addListener(
 
 function initialize() {
   if (!isChatPage()) return;
+  if ($("#_showStampSelect").length > 0) return;
   
   var wrapperDiv = $("#_wrapper");
   
@@ -403,14 +404,14 @@ function initialize() {
   chrome.runtime.sendMessage({method: "pageActionShow"}, function(response) {});
 }
 
-var cnt = 10;
+//var cnt = 10;
 var intervalFn = setInterval(function () {
-    --cnt;
-    if (isChatPage()) {
+    //--cnt;
+    //if (isChatPage()) {
         initialize();
-        clearInterval(intervalFn);
-    }
-    if (!cnt) {
-        clearInterval(intervalFn);
-    }
+        //clearInterval(intervalFn);
+    //}
+    // if (!cnt) {
+    //     clearInterval(intervalFn);
+    // }
 }, 500);
